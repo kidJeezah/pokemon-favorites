@@ -414,10 +414,10 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] `npm run dev` boots both; initial commit
 
 ### M2 — Backend: favorites + proxy *(~20%)*
-- [ ] `favorites` table via boot migration
-- [ ] GET/POST/DELETE favorites against Postgres (upsert → 201/200, 204-always delete)
-- [ ] `/api/pokemon`, `/:idOrName`, `/:idOrName/evolution` proxying with two-layer LRU cache + error mapping (404 passthrough, 502 upstream)
-- [ ] Verified via curl (incl. eevee evolution → 8 branches)
+- [x] `favorites` table via boot migration
+- [x] GET/POST/DELETE favorites against Postgres (upsert → 201/200, 204-always delete)
+- [x] `/api/pokemon`, `/:idOrName`, `/:idOrName/evolution` proxying with two-layer LRU cache + error mapping (404 passthrough, 502 upstream)
+- [x] Verified via curl (incl. eevee evolution → 8 branches)
 
 ### M3 — Frontend: list *(~15%)*
 - [ ] `usePokemonList` fetches 150 via proxy; scrollable Tailwind grid with sprite + formatted name

@@ -1,15 +1,4 @@
-import { useState } from 'react';
-import { PokemonCard } from '@/features/pokemon-list';
-import { spriteUrl } from '@/shared/lib/sprites';
-import type { PokemonType } from '@/shared/types/pokemon';
-
-// Static preview until M3 wires the real list query.
-const PREVIEW = [
-  { id: 1, name: 'bulbasaur', types: ['grass', 'poison'] as PokemonType[] },
-  { id: 4, name: 'charmander', types: ['fire'] as PokemonType[] },
-  { id: 7, name: 'squirtle', types: ['water'] as PokemonType[] },
-  { id: 25, name: 'pikachu', types: ['electric'] as PokemonType[] },
-];
+import { PokemonList } from '@/features/pokemon-list';
 
 function PokeballLogo() {
   return (
@@ -20,16 +9,6 @@ function PokeballLogo() {
 }
 
 export function App() {
-  const [favorites, setFavorites] = useState<Set<number>>(new Set([4]));
-
-  const toggleFavorite = (id: number) =>
-    setFavorites((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 flex items-center gap-3 border-b-4 border-ink bg-header px-5 py-3 shadow-[0_4px_0_#e3b79c]">
@@ -41,20 +20,7 @@ export function App() {
       </header>
 
       <main className="mx-auto max-w-6xl px-6 pt-10 pb-16">
-        <div className="grid grid-cols-[repeat(auto-fill,minmax(190px,1fr))] gap-x-5 gap-y-8">
-          {PREVIEW.map((p) => (
-            <PokemonCard
-              key={p.id}
-              id={p.id}
-              name={p.name}
-              spriteUrl={spriteUrl(p.id)}
-              types={p.types}
-              isFavorite={favorites.has(p.id)}
-              onSelect={() => {}}
-              onToggleFavorite={toggleFavorite}
-            />
-          ))}
-        </div>
+        <PokemonList />
       </main>
     </div>
   );
