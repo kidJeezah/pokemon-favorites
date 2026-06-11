@@ -442,9 +442,9 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [ ] CI green (lint + test + build, Postgres service container) — workflow committed; verifiable after first push to GitHub
 
 ### M8 — Polish *(~5%)*
-- [ ] All four UI states everywhere; a11y (buttons, alt text, focus trap)
-- [ ] README per outline: quick start (+ no-Docker path), env vars, architecture & state-ownership rationale, sprite-bypass note, accepted tradeoffs, cold-start + DB-expiry notes
-- [ ] `docs/architecture.mmd` still matches reality; lint clean
+- [x] All four UI states everywhere; a11y (buttons, alt text, focus trap)
+- [x] README per outline: quick start (+ no-Docker path), env vars, architecture & state-ownership rationale, sprite-bypass note, accepted tradeoffs, cold-start + DB-expiry notes
+- [x] `docs/architecture.mmd` still matches reality; lint clean
 
 ### M8.5 — User-requested additions (2026-06-11)
 - [x] Frontend search by name or dex number (`SearchBox` + `uiStore.searchQuery`, filters the full list client-side in both normal and favorites-only modes; "No Pokémon found" empty state)
