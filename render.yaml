@@ -13,7 +13,8 @@ services:
     name: pokemon-favorites-api
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build -w server
+    # --include=dev: NODE_ENV=production would otherwise skip the TS build tooling
+    buildCommand: npm install --include=dev && npm run build -w server
     startCommand: npm run start -w server
     healthCheckPath: /healthz
     envVars:
