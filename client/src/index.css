@@ -62,6 +62,8 @@
   --shadow-pixel-sm: 2px 2px 0 var(--color-sticker-shadow);
 
   --animate-bob: bob 2.4s steps(2, end) infinite;
+  --animate-fade-in: fade-in 0.18s ease;
+  --animate-flip-pop: flip-pop 0.6s cubic-bezier(0.2, 0.85, 0.3, 1.04) both;
 
   @keyframes bob {
     0%,
@@ -70,6 +72,32 @@
     }
     50% {
       transform: translateY(-5px);
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes flip-pop {
+    0% {
+      transform: rotateY(-92deg) scale(0.72);
+      opacity: 0;
+    }
+    55% {
+      transform: rotateY(14deg) scale(1.05);
+      opacity: 1;
+    }
+    78% {
+      transform: rotateY(-6deg) scale(0.99);
+    }
+    100% {
+      transform: rotateY(0deg) scale(1);
     }
   }
 }

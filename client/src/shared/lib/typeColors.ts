@@ -46,5 +46,28 @@ export const typeChipClass: Record<PokemonType, string> = {
   fairy: 'bg-type-fairy text-type-fairy-ink',
 };
 
+/** Translucent tint for the modal header panel, keyed by the first type. */
+export const typePanelClass: Record<PokemonType, string> = {
+  normal: 'bg-type-normal/60',
+  fire: 'bg-type-fire/60',
+  water: 'bg-type-water/60',
+  electric: 'bg-type-electric/60',
+  grass: 'bg-type-grass/60',
+  ice: 'bg-type-ice/60',
+  fighting: 'bg-type-fighting/60',
+  poison: 'bg-type-poison/60',
+  ground: 'bg-type-ground/60',
+  flying: 'bg-type-flying/60',
+  psychic: 'bg-type-psychic/60',
+  bug: 'bg-type-bug/60',
+  rock: 'bg-type-rock/60',
+  ghost: 'bg-type-ghost/60',
+  dragon: 'bg-type-dragon/60',
+  steel: 'bg-type-steel/60',
+  dark: 'bg-type-dark/60',
+  fairy: 'bg-type-fairy/60',
+};
+
 export const fallbackDotClass = 'text-muted';
 export const fallbackChipClass = 'bg-type-normal text-type-normal-ink';
+export const fallbackPanelClass = 'bg-frame';

@@ -420,8 +420,8 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] Verified via curl (incl. eevee evolution → 8 branches)
 
 ### M3 — Frontend: list *(~15%)*
-- [ ] `usePokemonList` fetches 150 via proxy; scrollable Tailwind grid with sprite + formatted name
-- [ ] Loading/error/retry states; Vite proxy confirmed (no CORS locally)
+- [x] `usePokemonList` fetches 150 via proxy; scrollable Tailwind grid with sprite + formatted name
+- [x] Loading/error/retry states; Vite proxy confirmed (no CORS locally)
 
 ### M4 — Frontend: detail modal *(~15%)*
 - [ ] Click card → modal with types, abilities, evolution strip

@@ -1,4 +1,6 @@
 import { PokemonList } from '@/features/pokemon-list';
+import { PokemonDetailModal } from '@/features/pokemon-detail';
+import { useUiStore } from '@/shared/store/uiStore';
 
 function PokeballLogo() {
   return (
@@ -9,6 +11,7 @@ function PokeballLogo() {
 }
 
 export function App() {
+  const selectedPokemonId = useUiStore((s) => s.selectedPokemonId);
   return (
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 flex items-center gap-3 border-b-4 border-ink bg-header px-5 py-3 shadow-[0_4px_0_#e3b79c]">
@@ -22,6 +25,8 @@ export function App() {
       <main className="mx-auto max-w-6xl px-6 pt-10 pb-16">
         <PokemonList />
       </main>
+
+      {selectedPokemonId !== null && <PokemonDetailModal pokemonId={selectedPokemonId} />}
     </div>
   );
 }
