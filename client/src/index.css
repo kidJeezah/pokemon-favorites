@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-poke-red: #ef5350;
+  --color-poke-yellow: #ffcb05;
+  --color-surface: #f8fafc;
+  --radius-card: 0.75rem;
+}

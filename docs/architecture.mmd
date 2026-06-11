@@ -1,0 +1,30 @@
+---
+title: Pokédex App — Services & Data Flow
+---
+flowchart LR
+    subgraph client["Frontend — React SPA on Vercel"]
+        UI["React UI<br/>(Tailwind components)"]
+        TQ["TanStack Query<br/>server-state cache"]
+        ZS["Zustand store<br/>UI state: favorites filter,<br/>selected Pokémon"]
+        UI <--> TQ
+        UI <--> ZS
+    end
+
+    subgraph render["Render — Web Service (pipeline validated via fork of render-examples/express-hello-world)"]
+        subgraph api["Backend — Express 5 API (Node.js + TypeScript)"]
+            PROXY["PokéAPI proxy routes<br/>GET /api/pokemon?limit=150<br/>GET /api/pokemon/:id<br/>GET /api/pokemon/:id/evolution"]
+            FAV["Favorites routes<br/>GET /api/favorites<br/>POST /api/favorites<br/>DELETE /api/favorites/:pokemonId"]
+            CACHE[("In-memory LRU cache<br/>trimmed PokéAPI responses, 24h TTL")]
+            PROXY <--> CACHE
+        end
+    end
+
+    PG[("Render PostgreSQL (managed)<br/>favorites table<br/>(only favorites stored)")]
+    POKE["PokéAPI<br/>pokeapi.co/api/v2"]
+    SPRITES["Sprite images (static)<br/>raw.githubusercontent.com<br/>PokeAPI/sprites"]
+
+    TQ -- "list / detail / evolution<br/>(HTTPS, JSON)" --> PROXY
+    TQ -- "add / remove / list favorites<br/>(HTTPS, JSON)" --> FAV
+    UI -- "sprite images, direct<br/>(bypasses proxy)" --> SPRITES
+    PROXY -- "cache miss only" --> POKE
+    FAV -- "SQL (pg)" --> PG
