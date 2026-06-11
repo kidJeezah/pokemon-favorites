@@ -1,6 +1,7 @@
 import type { PokemonType } from '@/shared/types/pokemon';
 import { typeDotClass, fallbackDotClass } from '@/shared/lib/typeColors';
 import { formatName } from '@/shared/lib/formatName';
+import { FavoriteToggle, useFavorites } from '@/features/favorites';
 
 interface PokemonCardProps {
   id: number;
@@ -8,22 +9,15 @@ interface PokemonCardProps {
   spriteUrl: string;
   /** Optional — the list endpoint has no types; cards render dots only when known. */
   types?: PokemonType[];
-  isFavorite: boolean;
   onSelect: (id: number) => void;
-  onToggleFavorite: (id: number) => void;
 }
 
 // Variant C "cozy sticker" from mokup_design/Pokemon Card Styles.dc.html:
 // dashed lavender border, warm hard shadow, slight tilt, FAV ★ badge when favorited.
-export function PokemonCard({
-  id,
-  name,
-  spriteUrl,
-  types = [],
-  isFavorite,
-  onSelect,
-  onToggleFavorite,
-}: PokemonCardProps) {
+export function PokemonCard({ id, name, spriteUrl, types = [], onSelect }: PokemonCardProps) {
+  const { isFavorite } = useFavorites();
+  const fav = isFavorite(id);
+
   return (
     <div
       role="button"
@@ -38,23 +32,10 @@ export function PokemonCard({
       }}
       className="relative -rotate-2 cursor-pointer border-[3px] border-dashed border-sticker bg-card p-4 shadow-sticker transition-transform duration-100 hover:-translate-y-1 hover:rotate-0 focus-visible:rotate-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
     >
-      <button
-        type="button"
-        aria-label={isFavorite ? `Remove ${formatName(name)} from favorites` : `Add ${formatName(name)} to favorites`}
-        aria-pressed={isFavorite}
-        onClick={(e) => {
-          e.stopPropagation();
-          onToggleFavorite(id);
-        }}
-        className={`absolute -top-3 -right-2.5 z-10 h-8 w-8 cursor-pointer border-[3px] border-ink bg-cream p-0 text-[17px] leading-none shadow-pixel-sm transition-transform duration-100 hover:scale-118 hover:rotate-6 ${
-          isFavorite ? 'text-heart' : 'text-heart-idle'
-        }`}
-      >
-        {isFavorite ? '♥' : '♡'}
-      </button>
+      <FavoriteToggle pokemonId={id} name={name} />
 
       <div className="relative">
-        {isFavorite && (
+        {fav && (
           <div className="absolute -top-6 left-1/2 -translate-x-1/2 rotate-3 border-2 border-ink bg-badge px-3.5 text-[15px]">
             FAV ★
           </div>

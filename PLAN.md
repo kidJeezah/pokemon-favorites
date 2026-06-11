@@ -424,8 +424,8 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] Loading/error/retry states; Vite proxy confirmed (no CORS locally)
 
 ### M4 — Frontend: detail modal *(~15%)*
-- [ ] Click card → modal with types, abilities, evolution strip
-- [ ] "No evolutions" for single-stage; branched chains render; clicking an evolution re-selects it; Esc/overlay close
+- [x] Click card → modal with types, abilities, evolution strip
+- [x] "No evolutions" for single-stage; branched chains render; clicking an evolution re-selects it; Esc/overlay close
 
 ### M5 — Favorites integration *(~15%)*
 - [ ] Heart toggle on card + modal; optimistic mutations with rollback + guarded `onSettled` invalidation

@@ -1,5 +1,6 @@
 import { PokemonList } from '@/features/pokemon-list';
 import { PokemonDetailModal } from '@/features/pokemon-detail';
+import { FavoritesFilter } from '@/features/favorites';
 import { useUiStore } from '@/shared/store/uiStore';
 
 function PokeballLogo() {
@@ -16,10 +17,11 @@ export function App() {
     <div className="min-h-screen">
       <header className="sticky top-0 z-10 flex items-center gap-3 border-b-4 border-ink bg-header px-5 py-3 shadow-[0_4px_0_#e3b79c]">
         <PokeballLogo />
-        <div>
+        <div className="mr-auto">
           <h1 className="text-3xl leading-none">Pokémon Favorites</h1>
           <p className="text-base leading-tight text-accent">Kanto · first 150</p>
         </div>
+        <FavoritesFilter />
       </header>
 
       <main className="mx-auto max-w-6xl px-6 pt-10 pb-16">

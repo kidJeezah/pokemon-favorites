@@ -10,6 +10,7 @@ import { typePanelClass, fallbackPanelClass } from '@/shared/lib/typeColors';
 import { TypeBadge } from './TypeBadge';
 import { AbilityList } from './AbilityList';
 import { EvolutionChain } from './EvolutionChain';
+import { useFavorites, useToggleFavorite } from '@/features/favorites';
 
 function SectionHeading({ children }: { children: string }) {
   return <div className="text-lg tracking-[2px] text-accent">{children}</div>;
@@ -19,6 +20,8 @@ export function PokemonDetailModal({ pokemonId }: { pokemonId: number }) {
   const clearSelection = useUiStore((s) => s.clearSelection);
   const detail = usePokemonDetail(pokemonId);
   const evolution = useEvolutionChain(pokemonId);
+  const { isFavorite } = useFavorites();
+  const { toggle } = useToggleFavorite();
   const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -121,6 +124,17 @@ export function PokemonDetailModal({ pokemonId }: { pokemonId: number }) {
                   <EvolutionChain stages={evolution.data.stages} currentId={detail.data.id} />
                 )}
               </div>
+
+              <button
+                type="button"
+                aria-pressed={isFavorite(detail.data.id)}
+                onClick={() => toggle({ id: detail.data!.id, name: detail.data!.name })}
+                className={`mt-6 w-full cursor-pointer border-[3px] border-ink py-2 font-pixel text-2xl shadow-[4px_4px_0_#00000022] transition-transform duration-100 hover:-translate-y-0.5 ${
+                  isFavorite(detail.data.id) ? 'bg-[#ff8aa6] text-white' : 'bg-card text-ink'
+                }`}
+              >
+                {isFavorite(detail.data.id) ? '♥  In your favorites' : '♡  Add to favorites'}
+              </button>
             </div>
           </>
         )}
