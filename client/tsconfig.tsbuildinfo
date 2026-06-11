@@ -1,1 +1,1 @@
-{"root":["./src/main.tsx","./src/app/app.tsx","./src/app/providers.tsx","./src/app/queryclient.ts","./src/test/setup.ts","./vite.config.ts"],"version":"5.9.3"}
+{"root":["./src/main.tsx","./src/app/app.tsx","./src/app/providers.tsx","./src/app/queryclient.ts","./src/features/pokemon-list/index.ts","./src/features/pokemon-list/components/pokemoncard.tsx","./src/shared/lib/formatname.ts","./src/shared/lib/sprites.ts","./src/shared/lib/typecolors.ts","./src/shared/types/pokemon.ts","./src/test/setup.ts","./vite.config.ts"],"version":"5.9.3"}

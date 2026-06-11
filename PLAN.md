@@ -304,7 +304,9 @@ Mutations invalidate only `['favorites']` (success *and* error → always reconc
 
 ### 5.5 Tailwind v4
 
-`tailwindcss` + `@tailwindcss/vite` plugin in `vite.config.ts`; **no `tailwind.config.js`, no PostCSS config**. `src/index.css`: `@import "tailwindcss";` plus `@theme { --color-poke-red: #ef5350; --color-poke-yellow: #ffcb05; --color-surface: #f8fafc; --radius-card: 0.75rem; }`. `typeColors.ts` maps each type to a **complete literal class string** (`fire: 'bg-orange-500 text-white'`, fallback `'bg-gray-400 text-white'`) — never interpolated fragments, so the scanner sees them. Dark mode skipped.
+`tailwindcss` + `@tailwindcss/vite` plugin in `vite.config.ts`; **no `tailwind.config.js`, no PostCSS config**. Dark mode skipped.
+
+**Visual design (decided): the "cozy 8-bit" mockups in `mokup_design/` (gitignored reference), card = variant C "cozy sticker".** VT323 pixel font (Google Fonts), paper background `#f3ead9` with a 5px dot grid, ink `#4a3b4f`, hard offset shadows (no blur). Card: dashed lavender border `#c9a0dd`, `-rotate-2` tilt (straightens on hover), cream sprite frame `#fbeede` with 3px ink border, bobbing pixelated sprite (`steps(2)` keyframes), "FAV ★" badge + filled heart when favorited, centered name, `● type` dot labels. All tokens live in `src/index.css` `@theme` (incl. 18 type bg/ink color pairs from the mockup palette, `--shadow-sticker`, `--animate-bob`). `typeColors.ts` maps each type to a **complete literal class string** (`grass: 'text-type-grass-ink'`, fallback `text-muted`) — never interpolated fragments, so the scanner sees them.
 
 ### 5.6 Frontend tests
 
@@ -406,10 +408,10 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [ ] Create the Render PostgreSQL instance; record the internal `DATABASE_URL`
 
 ### M1 — Scaffold *(~10%)*
-- [ ] `git init` + workspaces root (`package.json`, `tsconfig.base.json`, eslint/prettier)
-- [ ] Vite React-TS app in `client/`; Express 5 + tsx skeleton in `server/` with `/healthz`
-- [ ] `docker compose up` healthy (incl. `pokemon_test` init script)
-- [ ] `npm run dev` boots both; initial commit
+- [x] `git init` + workspaces root (`package.json`, `tsconfig.base.json`, eslint/prettier)
+- [x] Vite React-TS app in `client/`; Express 5 + tsx skeleton in `server/` with `/healthz`
+- [x] `docker compose up` healthy (incl. `pokemon_test` init script)
+- [x] `npm run dev` boots both; initial commit
 
 ### M2 — Backend: favorites + proxy *(~20%)*
 - [ ] `favorites` table via boot migration

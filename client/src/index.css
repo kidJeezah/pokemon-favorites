@@ -1,8 +1,83 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-poke-red: #ef5350;
-  --color-poke-yellow: #ffcb05;
-  --color-surface: #f8fafc;
-  --radius-card: 0.75rem;
+  --font-pixel: 'VT323', monospace;
+
+  /* mockup palette — mokup_design/ variant C (cozy sticker) + Pokemon Universe page */
+  --color-ink: #4a3b4f;
+  --color-paper: #f3ead9;
+  --color-card: #fffdfa;
+  --color-frame: #fbeede;
+  --color-cream: #fff6ee;
+  --color-sticker: #c9a0dd;
+  --color-sticker-shadow: #e7d4b8;
+  --color-badge: #ffd9c0;
+  --color-header: #ffe1cf;
+  --color-header-shadow: #e3b79c;
+  --color-heart: #ff7a98;
+  --color-heart-idle: #c2b2bb;
+  --color-poke-pink: #ff9fb0;
+  --color-muted: #8a7d6a;
+  --color-accent: #a8694e;
+
+  --color-type-normal: #e7ddc7;
+  --color-type-normal-ink: #6b6048;
+  --color-type-fire: #ffc1a6;
+  --color-type-fire-ink: #8a4a32;
+  --color-type-water: #aad1f0;
+  --color-type-water-ink: #345f86;
+  --color-type-electric: #ffe39c;
+  --color-type-electric-ink: #897331;
+  --color-type-grass: #b3dea3;
+  --color-type-grass-ink: #3f6b3a;
+  --color-type-ice: #bfeaea;
+  --color-type-ice-ink: #3c7373;
+  --color-type-fighting: #eaad9c;
+  --color-type-fighting-ink: #8a4030;
+  --color-type-poison: #d8b3ea;
+  --color-type-poison-ink: #6c3d86;
+  --color-type-ground: #e8d3a3;
+  --color-type-ground-ink: #7a5f2e;
+  --color-type-flying: #ccd5f5;
+  --color-type-flying-ink: #4a5588;
+  --color-type-psychic: #f6bfd2;
+  --color-type-psychic-ink: #8a3f5e;
+  --color-type-bug: #cfe09a;
+  --color-type-bug-ink: #566e2c;
+  --color-type-rock: #ddcaa6;
+  --color-type-rock-ink: #776035;
+  --color-type-ghost: #c3b6e0;
+  --color-type-ghost-ink: #5a4986;
+  --color-type-dragon: #bfbdf0;
+  --color-type-dragon-ink: #46438a;
+  --color-type-steel: #d6d9e0;
+  --color-type-steel-ink: #5a6272;
+  --color-type-dark: #c9bcb2;
+  --color-type-dark-ink: #564a41;
+  --color-type-fairy: #f8c9e0;
+  --color-type-fairy-ink: #94527a;
+
+  --shadow-sticker: 6px 6px 0 var(--color-sticker-shadow);
+  --shadow-pixel: 3px 3px 0 var(--color-header-shadow);
+  --shadow-pixel-sm: 2px 2px 0 var(--color-sticker-shadow);
+
+  --animate-bob: bob 2.4s steps(2, end) infinite;
+
+  @keyframes bob {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+  }
+}
+
+@layer base {
+  body {
+    @apply font-pixel text-ink bg-paper;
+    background-image: radial-gradient(#0000000a 1px, transparent 1px);
+    background-size: 5px 5px;
+  }
 }

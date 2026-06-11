@@ -1,6 +1,7 @@
 {
   "name": "pokemon-favorites",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
   "workspaces": [
     "client",
