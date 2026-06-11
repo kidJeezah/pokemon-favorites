@@ -3,6 +3,10 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { pinoHttp } from 'pino-http';
 import { env } from './config/env.js';
+import { pokemonRouter } from './routes/pokemon.routes.js';
+import { favoritesRouter } from './routes/favorites.routes.js';
+import { notFound } from './middleware/not-found.js';
+import { errorHandler } from './middleware/error-handler.js';
 
 export function createApp() {
   const app = express();
@@ -17,6 +21,12 @@ export function createApp() {
   app.get('/healthz', (_req, res) => {
     res.json({ ok: true });
   });
+
+  app.use('/api/pokemon', pokemonRouter);
+  app.use('/api/favorites', favoritesRouter);
+
+  app.use(notFound);
+  app.use(errorHandler);
 
   return app;
 }
