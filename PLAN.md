@@ -436,9 +436,9 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] Favorites count in header; empty state when filter on with zero favorites
 
 ### M7 — Tests *(~10%)*
-- [ ] Server suite green (favorites CRUD/idempotency, cache hit-count, error mapping, 8-branch Eevee flattening) against `pokemon_test`
-- [ ] Client suite green (store, optimistic add/rollback, list states, filter incl. >150 favorite, modal)
-- [ ] CI green (lint + test + build, Postgres service container)
+- [x] Server suite green (favorites CRUD/idempotency, cache hit-count, error mapping, 8-branch Eevee flattening) against `pokemon_test`
+- [x] Client suite green (store, optimistic add/rollback, list states, filter incl. >150 favorite, modal)
+- [ ] CI green (lint + test + build, Postgres service container) — workflow committed; verifiable after first push to GitHub
 
 ### M8 — Polish *(~5%)*
 - [ ] All four UI states everywhere; a11y (buttons, alt text, focus trap)
