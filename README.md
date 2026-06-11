@@ -85,17 +85,10 @@ Idempotency is deliberate: favoriting is a toggle driven by optimistic mutations
 | `UPSTREAM_TIMEOUT_MS` | server | default 5000 |
 | `VITE_API_URL` | client | empty locally (Vite proxy, no CORS); the Render URL in prod. **Baked at build time** — changing it requires a redeploy |
 
-## Decisions & accepted tradeoffs
+### Search, infinite scroll & logs
 
-- **"First 150" is read literally** — National-dex IDs 1–150, ending at Mewtwo; Mew (#151) is excluded. Including it is a one-character change (`limit=151`).
-- **POST /api/favorites trusts the client-supplied `name`** after zod shape/range validation — a hand-crafted `{ pokemonId: 999, name: "whatever" }` persists as sent. Fine for a single-user take-home; the strict fix (resolve the name via the cached detail fetch server-side) is documented, not built.
-- **Single user, no auth** — one global favorites list. Future path: a migration adding `user_id` with composite PK `(user_id, pokemon_id)`.
-- **Detail view is a modal, not a route** — keeps scroll/filter state trivially intact; tradeoff: no deep links. Migration path: swap `selectedPokemonId` for a `/pokemon/:id` route (the SPA rewrite in `vercel.json` already supports it).
 - **Search and infinite scroll are client-side.** The 150-item list is one cheap request (~1 KB DTOs), so search filters the full list in memory (by name — slug or display form — or dex number), and "infinite scroll" is windowing: 20 cards mount initially, +20 as a sentinel scrolls into view. No extra network traffic, and search always covers all 150 regardless of how many cards are mounted.
 - **Backend logs every data source** — each response is traceable in the server logs: `pokeapi request` with the full upstream URL/status/duration, `served from LRU cache` / `cache miss` per cache key, and `favorite upserted/listed/deleted` with `source: postgres`. Pretty-printed in dev, raw JSON in prod.
-- **Raw `pg`, no ORM** — one table; the `ON CONFLICT` upsert is the only interesting SQL.
-- **Express 5 semantics** — rejected async handlers auto-forward to the error middleware (no wrapper), and `req.query` is read-only, so validated values live on `res.locals.validated`.
-- **Render free-tier lifecycle** — the web service spins down after ~15 min idle (30–60 s cold start; hit `/healthz` to warm), and ⚠️ **free Render Postgres expires after 30 days**. Fallback: a free Neon branch — a pure `DATABASE_URL` swap (`?sslmode=require`); the pool (`max: 5`) already fits Neon's limits.
 
 ## Testing
 
@@ -106,4 +99,4 @@ Idempotency is deliberate: favoriting is a toggle driven by optimistic mutations
 ## Deployment
 
 - **Vercel (client):** Root Directory `client/`, Vite preset, `VITE_API_URL=https://<render-app>.onrender.com` (no trailing slash). SPA rewrites via `client/vercel.json`.
-- **Render (server):** Build `npm install && npm run build -w server`, Start `npm run start -w server` (run from the repo root so the workspace lockfile applies), Node 22. Env: `DATABASE_URL` (internal connection string), `CORS_ORIGIN=https://<app>.vercel.app`, `POKEAPI_BASE_URL`. Migration runs idempotently on boot; a 3 s retry absorbs managed-Postgres wake-up.
+- **Render (server):** one-click via the Blueprint in [`render.yaml`](render.yaml) (dashboard → New → Blueprint → this repo) — creates the web service (build `npm install && npm run build -w server`, start `npm run start -w server`, Node 22, `/healthz` health check) and the free Postgres with `DATABASE_URL` wired. Migration runs idempotently on boot; a 3 s retry absorbs managed-Postgres wake-up. ⚠️ Free Render Postgres expires after 30 days — fallback is a free Neon branch (pure `DATABASE_URL` swap with `?sslmode=require`).

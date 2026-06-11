@@ -439,7 +439,7 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 ### M7 — Tests *(~10%)*
 - [x] Server suite green (favorites CRUD/idempotency, cache hit-count, error mapping, 8-branch Eevee flattening) against `pokemon_test`
 - [x] Client suite green (store, optimistic add/rollback, list states, filter incl. >150 favorite, modal)
-- [ ] CI green (lint + test + build, Postgres service container) — workflow committed; verifiable after first push to GitHub
+- [x] CI green (lint + test + build, Postgres service container) — run #1 succeeded on GitHub Actions
 
 ### M8 — Polish *(~5%)*
 - [x] All four UI states everywhere; a11y (buttons, alt text, focus trap)
