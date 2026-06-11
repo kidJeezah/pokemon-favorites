@@ -405,8 +405,8 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] Services/data-flow diagram (`docs/architecture.mmd`, embedded in §1)
 - [x] `gh auth login` (user — interactive) — logged in as `kidJeezah`
 - [x] Fork `render-examples/express-hello-world` on GitHub → https://github.com/kidJeezah/express-hello-world
-- [ ] Create a Render Web Service from the fork; hello-world responds on its `.onrender.com` URL → **deploy pipeline validated**
-- [ ] Create the Render PostgreSQL instance; record the internal `DATABASE_URL`
+- [x] Create a Render Web Service from the fork; hello-world responds on its `.onrender.com` URL → **deploy pipeline validated** (https://express-hello-world-zs3j.onrender.com)
+- [x] Create the Render PostgreSQL instance; record the internal `DATABASE_URL` → superseded by the `render.yaml` Blueprint, which creates `pokemon-favorites-db` and wires `DATABASE_URL` automatically (M9)
 
 ### M1 — Scaffold *(~10%)*
 - [x] `git init` + workspaces root (`package.json`, `tsconfig.base.json`, eslint/prettier)
