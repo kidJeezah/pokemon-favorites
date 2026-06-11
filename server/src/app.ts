@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { pinoHttp } from 'pino-http';
 import { env } from './config/env.js';
+import { logger } from './lib/logger.js';
 import { pokemonRouter } from './routes/pokemon.routes.js';
 import { favoritesRouter } from './routes/favorites.routes.js';
 import { notFound } from './middleware/not-found.js';
@@ -14,7 +15,7 @@ export function createApp() {
   app.use(helmet());
   app.use(cors({ origin: env.CORS_ORIGIN, methods: ['GET', 'POST', 'DELETE'] }));
   if (env.NODE_ENV !== 'test') {
-    app.use(pinoHttp());
+    app.use(pinoHttp({ logger }));
   }
   app.use(express.json());
 

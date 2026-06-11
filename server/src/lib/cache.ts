@@ -1,4 +1,5 @@
 import { LRUCache } from 'lru-cache';
+import { logger } from './logger.js';
 
 const cache = new LRUCache<string, Promise<unknown>>({
   max: 1000,
@@ -11,8 +12,12 @@ const cache = new LRUCache<string, Promise<unknown>>({
  */
 export function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
   const existing = cache.get(key);
-  if (existing) return existing as Promise<T>;
+  if (existing) {
+    logger.info({ key, source: 'cache' }, 'served from LRU cache');
+    return existing as Promise<T>;
+  }
 
+  logger.info({ key, source: 'upstream' }, 'cache miss — fetching upstream');
   const promise = fn().catch((err: unknown) => {
     cache.delete(key);
     throw err;

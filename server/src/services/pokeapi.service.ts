@@ -1,5 +1,6 @@
 import { env } from '../config/env.js';
 import { cached } from '../lib/cache.js';
+import { logger } from '../lib/logger.js';
 import { spriteUrl } from '../lib/sprites.js';
 import { HttpError } from '../lib/http-error.js';
 import type {
@@ -17,15 +18,22 @@ export const idFromUrl = (url: string): number => {
 };
 
 export async function fetchUpstream<T>(path: string): Promise<T> {
+  const url = `${env.POKEAPI_BASE_URL}${path}`;
+  const started = performance.now();
   let res: Response;
   try {
-    res = await fetch(`${env.POKEAPI_BASE_URL}${path}`, {
+    res = await fetch(url, {
       signal: AbortSignal.timeout(env.UPSTREAM_TIMEOUT_MS),
       headers: { 'User-Agent': 'pokemon-favorites-takehome (github.com/kidJeezah)' },
     });
-  } catch {
+  } catch (err) {
+    logger.warn({ url, err: String(err) }, 'pokeapi request failed');
     throw new HttpError(502, 'UPSTREAM_ERROR', 'PokéAPI is unreachable or timed out');
   }
+  logger.info(
+    { url, status: res.status, ms: Math.round(performance.now() - started) },
+    'pokeapi request',
+  );
   if (res.status === 404) throw new HttpError(404, 'NOT_FOUND', 'Pokémon not found');
   if (!res.ok) throw new HttpError(502, 'UPSTREAM_ERROR', `PokéAPI responded ${res.status}`);
   return res.json() as Promise<T>;
