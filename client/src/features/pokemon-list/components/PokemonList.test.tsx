@@ -1,18 +1,44 @@
 import { describe, expect, it } from 'vitest';
-import { screen } from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { delay, http, HttpResponse } from 'msw';
 import { mswServer } from '@/test/msw/server';
 import { API } from '@/test/msw/handlers';
 import { renderWithProviders } from '@/test/utils';
+import { MockIntersectionObserver } from '@/test/intersection-observer';
 import { useUiStore } from '@/shared/store/uiStore';
 import { PokemonList } from './PokemonList';
 
 describe('PokemonList', () => {
-  it('renders 150 cards on success', async () => {
+  it('renders the first 20 cards, then more as the sentinel intersects', async () => {
     renderWithProviders(<PokemonList />);
-    const cards = await screen.findAllByRole('button', { name: /^View .* details$/ });
-    expect(cards).toHaveLength(150);
+    expect(await screen.findAllByRole('button', { name: /^View .* details$/ })).toHaveLength(20);
+    expect(screen.getByTestId('scroll-sentinel')).toBeInTheDocument();
+
+    act(() => MockIntersectionObserver.triggerLatest());
+    expect(screen.getAllByRole('button', { name: /^View .* details$/ })).toHaveLength(40);
+  });
+
+  it('search filters the full 150 by name, not just the visible page', async () => {
+    renderWithProviders(<PokemonList />);
+    await screen.findAllByRole('button', { name: /^View .* details$/ });
+
+    // pokemon-42 is outside the first visible page of 20.
+    act(() => useUiStore.getState().setSearchQuery('pokemon-42'));
+    const cards = screen.getAllByRole('button', { name: /^View .* details$/ });
+    expect(cards).toHaveLength(1);
+    expect(screen.getByRole('button', { name: /View Pokemon 42 details/ })).toBeInTheDocument();
+  });
+
+  it('search by dex number matches and a miss shows the not-found state', async () => {
+    renderWithProviders(<PokemonList />);
+    await screen.findAllByRole('button', { name: /^View .* details$/ });
+
+    act(() => useUiStore.getState().setSearchQuery('042'));
+    expect(screen.getByRole('button', { name: /View Pokemon 42 details/ })).toBeInTheDocument();
+
+    act(() => useUiStore.getState().setSearchQuery('zzz-no-match'));
+    expect(screen.getByText('No Pokémon found')).toBeInTheDocument();
   });
 
   it('shows a spinner while pending', async () => {

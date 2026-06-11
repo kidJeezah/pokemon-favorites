@@ -251,13 +251,14 @@ Favorites live in Query, **not** Zustand: Postgres is the source of truth and th
 | Name | Responsibility |
 |---|---|
 | `App` | Sticky header (title + `FavoritesFilter`), `PokemonList`, conditional `PokemonDetailModal` |
-| `PokemonList` | Responsive grid in plain `overflow-y-auto`; owns loading/error/empty branches. **No virtualization** — 150 lazy-image cards are trivially in budget; revisit at ~500+ |
+| `PokemonList` | Responsive grid; owns loading/error/empty branches. **Client-side infinite scroll**: the 150 list is still one request, but only 20 cards mount initially, +20 as an IntersectionObserver sentinel scrolls into view (resets on search/filter change). No virtualization needed |
 | `PokemonCard` | Sprite (via `sprites.ts` helper, `loading="lazy"`), display name, id, embedded `FavoriteToggle`; click → `selectPokemon(id)` |
 | `PokemonDetailModal` | Accessible dialog (focus trap, Esc/overlay close): official artwork (URL built from `id` by `sprites.ts`), `TypeBadge`s, `AbilityList`, `EvolutionChain` |
 | `TypeBadge` / `AbilityList` | Colored type pill via `typeColors`; ability names with hidden flag |
 | `EvolutionChain` | Renders `stages` as horizontal strip with arrows; clicking a stage member calls `selectPokemon(id)`; "No evolutions" when `stages.length === 1` |
 | `FavoriteToggle` | Heart button; `useFavorites().isFavorite(id)` + `useToggleFavorite().toggle(p)`; `e.stopPropagation()` |
 | `FavoritesFilter` | Switch bound to `showFavoritesOnly`; shows favorites count from `useFavorites` |
+| `SearchBox` | Header input bound to `uiStore.searchQuery`; client-side match by name (slug or display form) or dex number |
 | `usePokemonList` / `usePokemonDetail(id)` / `useEvolutionChain(id)` | `useQuery` wrappers; detail/evolution `enabled: id !== null` |
 | `useFavorites` | `useQuery(['favorites'])` + derived `favoriteIds: Set<number>` + `isFavorite(id)` |
 | `useToggleFavorite` | Add/remove `useMutation`s behind one `toggle(pokemon)`, optimistic + rollback |
@@ -444,6 +445,11 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [ ] All four UI states everywhere; a11y (buttons, alt text, focus trap)
 - [ ] README per outline: quick start (+ no-Docker path), env vars, architecture & state-ownership rationale, sprite-bypass note, accepted tradeoffs, cold-start + DB-expiry notes
 - [ ] `docs/architecture.mmd` still matches reality; lint clean
+
+### M8.5 — User-requested additions (2026-06-11)
+- [x] Frontend search by name or dex number (`SearchBox` + `uiStore.searchQuery`, filters the full list client-side in both normal and favorites-only modes; "No Pokémon found" empty state)
+- [x] Infinite scroll for the list — first 20 cards, +20 per sentinel intersection (client-side windowing over the single 150-item request)
+- [x] Backend source logging (pino + pino-pretty in dev): full upstream PokéAPI URL with status/ms, LRU cache hit/miss per key, and Postgres favorites operations — every response traceable to `source: upstream | cache | postgres`
 
 ### M9 — Deploy *(~5%)*
 - [ ] Render Web Service pointed at this repo (build/start commands from §8); env vars set

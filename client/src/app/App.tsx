@@ -1,4 +1,4 @@
-import { PokemonList } from '@/features/pokemon-list';
+import { PokemonList, SearchBox } from '@/features/pokemon-list';
 import { PokemonDetailModal } from '@/features/pokemon-detail';
 import { FavoritesFilter } from '@/features/favorites';
 import { useUiStore } from '@/shared/store/uiStore';
@@ -21,6 +21,7 @@ export function App() {
           <h1 className="text-3xl leading-none">Pokémon Favorites</h1>
           <p className="text-base leading-tight text-accent">Kanto · first 150</p>
         </div>
+        <SearchBox />
         <FavoritesFilter />
       </header>
 
