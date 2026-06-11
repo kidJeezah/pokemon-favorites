@@ -428,12 +428,12 @@ Each milestone = one commit. Backend-first so every frontend milestone develops 
 - [x] "No evolutions" for single-stage; branched chains render; clicking an evolution re-selects it; Esc/overlay close
 
 ### M5 — Favorites integration *(~15%)*
-- [ ] Heart toggle on card + modal; optimistic mutations with rollback + guarded `onSettled` invalidation
-- [ ] Favorites survive page reload (proves Postgres persistence)
+- [x] Heart toggle on card + modal; optimistic mutations with rollback + guarded `onSettled` invalidation
+- [x] Favorites survive page reload (proves Postgres persistence)
 
 ### M6 — Favorites filter *(~5%)*
-- [ ] Zustand `showFavoritesOnly` switches the grid to render from the favorites query (IDs > 150 included)
-- [ ] Favorites count in header; empty state when filter on with zero favorites
+- [x] Zustand `showFavoritesOnly` switches the grid to render from the favorites query (IDs > 150 included)
+- [x] Favorites count in header; empty state when filter on with zero favorites
 
 ### M7 — Tests *(~10%)*
 - [ ] Server suite green (favorites CRUD/idempotency, cache hit-count, error mapping, 8-branch Eevee flattening) against `pokemon_test`
